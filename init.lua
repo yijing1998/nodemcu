@@ -2,16 +2,21 @@ if (wifi.getmode() ~= wifi.STATION) then
     wifi.setmode(wifi.STATION, true)
 end
 
+local function softdelay()
+    for i = 1, 3000000 do
+        local tmp = i + i
+    end
+end
+
 local function smartconfig()
     local t_smart = tmr.create()
     local tout_smart = 30000
     wifi.stopsmart()
     wifi.startsmart()
     wifi.sta.eventMonReg(wifi.STA_GOTIP, function()
-        t_smart:unregister()
-        wifi.sta.eventMonReg(wifi.STA_GOTIP)
-        print("successful get ip address, stop the timer and begin user application!")
-        --do user application
+        --flash stores all, no need to free resources, just reboot!
+        softdelay()
+        node.restart()
     end)
     wifi.sta.eventMonStart()
     t_smart:alarm(tout_smart, tmr.ALARM_SINGLE, function()
