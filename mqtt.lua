@@ -1,11 +1,15 @@
-m = mqtt.Client("node1998", 120)
+m = mqtt.Client("yijing1998", 120, "yijing1998", "46c87840c440417895090be1631dfaa1")
 
 m:on("connect", function(client)
     print ("mqtt connected")
-    m:subscribe("/mqtt-spy/yijing1998/", 0, function(client)
-        print("subscribe ok")
+    --m:subscribe("yijing1998/f/homesw", 0, function(client)
+    --     print("subscribe ok")
+    --end)
+    m:subscribe("yijing1998/f/atest", 0, function(client)
+         print("subscribe ok")
     end)
 end)
+
 m:on("offline", function(client) print ("mqtt offline") end)
 
 m:on("message", function(client, topic, data) 
@@ -15,4 +19,4 @@ m:on("message", function(client, topic, data)
   end
 end)
 
-m:connect("test.mosquitto.org")
+m:connect("io.adafruit.com")

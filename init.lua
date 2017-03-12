@@ -12,6 +12,8 @@ local function smartconfig()
         wifi.sta.eventMonReg(wifi.STA_GOTIP)
         print("successful get ip address, stop the timer and begin user application!")
         --do user application
+        --for more heap resource, user application must send reset command to restart the mcu
+        --heap consumption is similar to that after reboot, so no need reboot?
     end)
     wifi.sta.eventMonStart()
     t_smart:alarm(tout_smart, tmr.ALARM_SINGLE, function()
