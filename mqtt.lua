@@ -1,22 +1,19 @@
-m = mqtt.Client("yijing1998", 120, "yijing1998", "46c87840c440417895090be1631dfaa1")
+local mc = mqtt.Client("DeviceId-0xuu9swo9d", 60, "yijing1998/esp8266", "pZjbpasTCSMbCH6PVz9GJ+Ef8vBkY4OKvvqAbkfOOHI=")
 
-m:on("connect", function(client)
-    print ("mqtt connected")
-    --m:subscribe("yijing1998/f/homesw", 0, function(client)
-    --     print("subscribe ok")
-    --end)
-    m:subscribe("yijing1998/f/atest", 0, function(client)
-         print("subscribe ok")
-    end)
+mc:on("message", function(client, topic, msg)
+    if msg == nil then
+        print(topic .. ": nil")
+    else
+        print(topic .. ":" .. msg)
+    end
 end)
 
-m:on("offline", function(client) print ("mqtt offline") end)
+mc:on("offline", function(client) print ("mqtt offline!") end)
 
-m:on("message", function(client, topic, data) 
-  print(topic .. ":" ) 
-  if data ~= nil then
-    print(data)
-  end
+mc:connect("yijing1998.mqtt.iot.gz.baidubce.com", 1883, 0, 1,
+    function(client)
+        print("subscribing...")
+        client:subscribe("note", 0)
+    end, function(client, reason)
+        print("can't connect! errorcode:" .. reason)
 end)
-
-m:connect("io.adafruit.com")
