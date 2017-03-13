@@ -1,4 +1,4 @@
-local mc = mqtt.Client("DeviceId-0xuu9swo9d", 60, "yijing1998/esp8266", "pZjbpasTCSMbCH6PVz9GJ+Ef8vBkY4OKvvqAbkfOOHI=")
+local mc = mqtt.Client("DeviceId-0xuu9swo9d", 60, "yijing1998", "46c87840c440417895090be1631dfaa1")
 
 mc:on("message", function(client, topic, msg)
     if msg == nil then
@@ -10,10 +10,10 @@ end)
 
 mc:on("offline", function(client) print ("mqtt offline!") end)
 
-mc:connect("yijing1998.mqtt.iot.gz.baidubce.com", 1883, 0, 1,
+mc:connect("io.adafruit.com", 8883, 1, 1,
     function(client)
         print("subscribing...")
-        client:subscribe("note", 0)
+        client:subscribe("yijing1998/f/homesw", 0)
     end, function(client, reason)
         print("can't connect! errorcode:" .. reason)
 end)
