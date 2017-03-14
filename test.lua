@@ -1,14 +1,11 @@
-lighton=0
-pin=2
-gpio.mode(pin,gpio.OUTPUT)
-local mt = tmr.create()
-mt:register(2000,tmr.ALARM_AUTO,function()
-    if lighton==0 then
-        lighton=1
-        gpio.write(pin,gpio.HIGH)
-    else
-        lighton=0
-        gpio.write(pin,gpio.LOW)
-    end
-end)
-mt:start()
+function dotest(id)
+    gpio.mode(id, gpio.OUTPUT)
+    print("read: " .. gpio.read(id))
+    --gpio.mode(id, gpio.INPUT)
+    --gpio.write(id, gpio.HIGH)
+    --print("set: " .. gpio.HIGH)
+end
+
+for x=0, 8, 1 do
+    dotest(x)
+end
